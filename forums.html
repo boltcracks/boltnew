@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="en" id="theme-style">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolt - Invite Only Community</title>
+    <style>
+        :root {
+            --primary: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --accent: #3498db;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --card-bg: white;
+            --message-bg: #f9f9f9;
+            --owner-color: #ff9900;
+            --admin-color: #e74c3c;
+            --cracker-color: #9b59b6;
+            --user-color: #3498db;
+        }
+
+        .theme-dark {
+            --bg-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --card-bg: #2d2d2d;
+            --dark: #1e1e1e;
+            --message-bg: #3a3a3a;
+        }
+
+        .theme-blue {
+            --bg-color: #e6f2ff;
+            --text-color: #003366;
+            --card-bg: #cce0ff;
+            --dark: #004080;
+            --primary: #0066cc;
+            --message-bg: #d9e6ff;
+        }
+
+        .theme-green {
+            --bg-color: #e6ffe6;
+            --text-color: #004d00;
+            --card-bg: #ccffcc;
+            --dark: #006600;
+            --primary: #00b300;
+            --message-bg: #d9ffd9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .header {
+            background-color: var(--dark);
+            color: white;
+            padding: 1rem 2rem;
+            border-bottom: 4px solid var(--primary);
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border 0.3s;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            filter: brightness(90%);
+        }
+
+        .btn-secondary {
+            background-color: var(--dark);
+        }
+
+        .invite-code {
+            font-style: italic;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-top: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Forum Page Styles */
+        .forum-container {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            flex: 1;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+        }
+
+        .chat-container {
+            flex: 3;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            height: 70vh;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            border: 1px solid var(--dark);
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            background-color: var(--message-bg);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.7;
+            margin-bottom: 0.25rem;
+        }
+
+        .message-input {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .message-input input {
+            flex: 1;
+        }
+
+        .user-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .user-info p {
+            margin-bottom: 0.5rem;
+        }
+
+        .uid {
+            font-family: monospace;
+            background-color: var(--message-bg);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .online-users {
+            margin-top: 1.5rem;
+        }
+
+        .online-users h3 {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--dark);
+            opacity: 0.7;
+        }
+
+        .user-list {
+            list-style: none;
+        }
+
+        .user-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--dark);
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #2ecc71;
+            margin-right: 8px;
+        }
+
+        /* Profile Picture Styles */
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+
+        .profile-pic-small {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+            border: 1px solid var(--primary);
+        }
+
+        /* Profile Editor */
+        .profile-editor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .profile-editor-content {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .profile-editor-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .theme-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-option.selected {
+            border-color: var(--text-color);
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .remember-me input {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom: 2px solid var(--primary);
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            box-shadow: var(--shadow);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Profile Page */
+        .profile-page {
+            display: none;
+        }
+
+        .profile-page.active {
+            display: block;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-details {
+            flex: 1;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .profile-content {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .profile-posts {
+            flex: 2;
+        }
+
+        .profile-sidebar {
+            flex: 1;
+        }
+
+        .post {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .post-user {
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        .post-time {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-left: auto;
+        }
+
+        .post-content {
+            margin-bottom: 1rem;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            cursor: pointer;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: var(--message-bg);
+        }
+
+        .nav-link.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .nav-link i {
+            font-size: 1.2rem;
+        }
+
+        /* Role Badges */
+        .role-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        .role-owner {
+            background-color: var(--owner-color);
+            color: white;
+        }
+
+        .role-admin {
+            background-color: var(--admin-color);
+            color: white;
+        }
+
+        .role-cracker {
+            background-color: var(--cracker-color);
+            color: white;
+        }
+
+        .role-user {
+            background-color: var(--user-color);
+            color: white;
+        }
+
+        /* Admin Controls */
+        .admin-controls {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--dark);
+        }
+
+        .admin-controls h3 {
+            margin-bottom: 1rem;
+        }
+
+        .role-select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Login/Register Page -->
+    <div id="auth-page">
+        <header class="header">
+            <div class="logo">Bolt</div>
+            <div>Invite Only Community</div>
+        </header>
+        
+        <div class="container">
+            <div class="card">
+                <h2>Welcome to Bolt</h2>
+                <p>An exclusive community for invited members only.</p>
+                
+                <div id="login-form">
+                    <h3>Login</h3>
+                    <div class="form-group">
+                        <label for="login-username">Username</label>
+                        <input type="text" id="login-username" placeholder="Enter your username">
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password">
+                    </div>
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me">Remember me</label>
+                    </div>
+                    <button id="login-btn">Login</button>
+                    <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+                </div>
+                
+                <div id="register-form" class="hidden">
+                    <h3>Register</h3>
+                    <div class="form-group">
+                        <label for="reg-username">Username</label>
+                        <input type="text" id="reg-username" placeholder="Choose a username">
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <input type="password" id="reg-password" placeholder="Choose a password">
+                    </div>
+                    <div class="form-group">
+                        <label for="invite-code">Invite Code</label>
+                        <input type="text" id="invite-code" placeholder="Enter your invite code">
+                    </div>
+                    <button id="register-btn">Register</button>
+                    <p class="invite-code">You need an invite code to register.</p>
+                    <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Forum Page (hidden by default) -->
+    <div id="forum-page" class="hidden">
+        <header class="header">
+            <div class="logo">Bolt</div>
+            <div>
+                <div class="nav-link" id="profile-link">
+                    <i class="fas fa-user"></i>
+                    <span id="current-username"></span>
+                </div>
+                | <a href="#" id="logout-btn">Logout</a>
+            </div>
+        </header>
+        
+        <div class="container forum-container">
+            <div class="sidebar">
+                <div class="nav-link active" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </div>
+                <div class="nav-link" data-page="profile">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </div>
+                <div class="nav-link" data-page="chat">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat</span>
+                </div>
+                
+                <div class="online-users">
+                    <h3>Online Users</h3>
+                    <ul class="user-list" id="user-list">
+                        <!-- Will be populated with JavaScript -->
+                    </ul>
+                </div>
+
+                <!-- Admin Controls (only visible to Bolt! and other admins) -->
+                <div id="admin-controls" class="admin-controls hidden">
+                    <h3>Admin Controls</h3>
+                    <select class="user-select" id="admin-user-select">
+                        <option value="">Select User</option>
+                    </select>
+                    <select class="role-select" id="admin-role-select">
+                        <option value="User">User</option>
+                        <option value="Cracker">Cracker</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                    <button id="admin-set-role">Set Role</button>
+                </div>
+            </div>
+            
+            <!-- Home Page -->
+            <div class="page-content active" id="home-page">
+                <h2>Welcome to Bolt</h2>
+                <p>This is an exclusive community for invited members only.</p>
+                
+                <div class="card">
+                    <h3>Community Members</h3>
+                    <div id="community-members">
+                        <!-- Will be populated with JavaScript -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Page -->
+            <div class="profile-page" id="profile-page">
+                <div class="profile-header">
+                    <img src="" alt="Profile Picture" class="profile-pic" id="profile-pic-large">
+                    <div class="profile-details">
+                        <h2 id="profile-username-full">Username</h2>
+                        <p class="uid" id="profile-uid-full">UID: BLT-0000</p>
+                        <p id="profile-bio-full">No bio yet</p>
+                        <div id="profile-role"></div>
+                        <button id="edit-profile-btn" style="margin-top: 1rem;">Edit Profile</button>
+                    </div>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="post-count">0</div>
+                        <div class="stat-label">Posts</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="join-date">-</div>
+                        <div class="stat-label">Member Since</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="last-active">Now</div>
+                        <div class="stat-label">Last Active</div>
+                    </div>
+                </div>
+                
+                <div class="profile-content">
+                    <div class="profile-posts">
+                        <h3>Recent Activity</h3>
+                        <div id="user-posts">
+                            <!-- Will be populated with JavaScript -->
+                        </div>
+                    </div>
+                    <div class="profile-sidebar">
+                        <div class="card">
+                            <h3>Details</h3>
+                            <p><strong>UID:</strong> <span id="profile-details-uid"></span></p>
+                            <p><strong>Joined:</strong> <span id="profile-details-joined"></span></p>
+                            <p><strong>Status:</strong> <span class="status-indicator"></span> Online</p>
+                            <p><strong>Role:</strong> <span id="profile-details-role"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chat Page -->
+            <div class="page-content" id="chat-page">
+                <h2>Community Chat</h2>
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Will be populated with JavaScript -->
+                </div>
+                
+                <div class="message-input">
+                    <input type="text" id="message-input" placeholder="Type your message here...">
+                    <button id="send-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Profile Editor Modal -->
+    <div id="profile-editor" class="hidden">
+        <div class="profile-editor">
+            <div class="profile-editor-content">
+                <button class="profile-editor-close" id="close-editor">&times;</button>
+                <h2>Edit Profile</h2>
+                
+                <div class="form-group">
+                    <label for="edit-username">Username</label>
+                    <input type="text" id="edit-username" placeholder="Enter new username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-bio">Bio</label>
+                    <textarea id="edit-bio" rows="3" placeholder="Tell us about yourself"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Profile Picture</label>
+                    <input type="file" id="profile-pic-upload" accept="image/*">
+                    <div style="margin-top: 1rem;">
+                        <img src="" alt="Preview" id="profile-pic-preview" class="profile-pic">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Theme</label>
+                    <div class="theme-selector">
+                        <div class="theme-option selected" data-theme="default" style="background: #f5f5f5; border: 1px solid #ccc;"></div>
+                        <div class="theme-option" data-theme="dark" style="background: #1a1a1a; border: 1px solid #333;"></div>
+                        <div class="theme-option" data-theme="blue" style="background: #e6f2ff; border: 1px solid #99c2ff;"></div>
+                        <div class="theme-option" data-theme="green" style="background: #e6ffe6; border: 1px solid #99e699;"></div>
+                    </div>
+                </div>
+                
+                <button id="save-profile-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+    
+    <script>
+        // DOM Elements
+        const authPage = document.getElementById('auth-page');
+        const forumPage = document.getElementById('forum-page');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const showRegister = document.getElementById('show-register');
+        const showLogin = document.getElementById('show-login');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const rememberMe = document.getElementById('remember-me');
+        const currentUsername = document.getElementById('current-username');
+        const chatMessages = document.getElementById('chat-messages');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const userList = document.getElementById('user-list');
+        const profilePicLarge = document.getElementById('profile-pic-large');
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const profileEditor = document.getElementById('profile-editor');
+        const closeEditor = document.getElementById('close-editor');
+        const editUsername = document.getElementById('edit-username');
+        const editBio = document.getElementById('edit-bio');
+        const profilePicUpload = document.getElementById('profile-pic-upload');
+        const profilePicPreview = document.getElementById('profile-pic-preview');
+        const saveProfileBtn = document.getElementById('save-profile-btn');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        const themeStyle = document.getElementById('theme-style');
+        const notification = document.getElementById('notification');
+        const profileLink = document.getElementById('profile-link');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pageContents = document.querySelectorAll('.page-content');
+        const profilePage = document.getElementById('profile-page');
+        const homePage = document.getElementById('home-page');
+        const chatPage = document.getElementById('chat-page');
+        const profileUsernameFull = document.getElementById('profile-username-full');
+        const profileUidFull = document.getElementById('profile-uid-full');
+        const profileBioFull = document.getElementById('profile-bio-full');
+        const postCount = document.getElementById('post-count');
+        const joinDate = document.getElementById('join-date');
+        const lastActive = document.getElementById('last-active');
+        const userPosts = document.getElementById('user-posts');
+        const communityMembers = document.getElementById('community-members');
+        const profileDetailsUid = document.getElementById('profile-details-uid');
+        const profileDetailsJoined = document.getElementById('profile-details-joined');
+        const profileDetailsRole = document.getElementById('profile-details-role');
+        const profileRole = document.getElementById('profile-role');
+        const adminControls = document.getElementById('admin-controls');
+        const adminUserSelect = document.getElementById('admin-user-select');
+        const adminRoleSelect = document.getElementById('admin-role-select');
+        const adminSetRoleBtn = document.getElementById('admin-set-role');
+
+        // Default profile picture
+        const defaultPfp = 'https://i.imgur.com/JR7peSW.png';
+
+        // Initialize data
+        let usersData = JSON.parse(localStorage.getItem('bolt_users')) || [];
+        let chatData = JSON.parse(localStorage.getItem('bolt_chat')) || [];
+        let postsData = JSON.parse(localStorage.getItem('bolt_posts')) || [];
+
+        // Check if Bolt! (UID: BLT-0001) exists, if not create it
+        if (!usersData.some(user => user.uid === 'BLT-0001')) {
+            const boltUser = {
+                username: 'Bolt!',
+                uid: 'BLT-0001',
+                pfp: defaultPfp,
+                online: false,
+                role: 'Owner',
+                joinDate: new Date().toLocaleDateString()
+            };
+            usersData.push(boltUser);
+            localStorage.setItem('bolt_users', JSON.stringify(usersData));
+            localStorage.setItem('bolt_userCount', '1');
+        }
+
+        // Navigation
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                // Set active nav link
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Show corresponding page
+                const page = link.dataset.page;
+                pageContents.forEach(content => content.classList.remove('active'));
+                profilePage.classList.remove('active');
+                
+                if (page === 'profile') {
+                    profilePage.classList.add('active');
+                    renderProfilePage();
+                } else if (page === 'chat') {
+                    chatPage.classList.add('active');
+                    renderChatMessages();
+                } else {
+                    homePage.classList.add('active');
+                    renderHomePage();
+                }
+            });
+        });
+
+        profileLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            navLinks.forEach(l => l.classList.remove('active'));
+            document.querySelector('.nav-link[data-page="profile"]').classList.add('active');
+            pageContents.forEach(content => content.classList.remove('active'));
+            profilePage.classList.add('active');
+            renderProfilePage();
+        });
+
+        // Render profile page
+        function renderProfilePage() {
+            const user = JSON.parse(localStorage.getItem('bolt_user'));
+            if (!user) return;
+            
+            profileUsernameFull.textContent = user.username;
+            profileUidFull.textContent = `UID: ${user.uid}`;
+            profileBioFull.textContent = user.bio || 'No bio yet';
+            profilePicLarge.src = user.pfp || defaultPfp;
+            
+            // Set role badge
+            const role = user.role || 'User';
+            profileRole.innerHTML = `<span class="role-badge ${getRoleClass(role)}">${role}</span>`;
+            profileDetailsRole.innerHTML = `<span class="role-badge ${getRoleClass(role)}">${role}</span>`;
+            
+            // Count user's posts
+            const userPostCount = postsData.filter(post => post.uid === user.uid).length;
+            postCount.textContent = userPostCount;
+            
+            // Join date
+            joinDate.textContent = user.joinDate || new Date().toLocaleDateString();
+            profileDetailsJoined.textContent = user.joinDate || new Date().toLocaleDateString();
+            
+            // UID
+            profileDetailsUid.textContent = user.uid;
+            
+            // Render user's posts
+            renderUserPosts(user.uid);
+        }
+
+        // Get CSS class for role badge
+        function getRoleClass(role) {
+            switch(role) {
+                case 'Owner': return 'role-owner';
+                case 'Admin': return 'role-admin';
+                case 'Cracker': return 'role-cracker';
+                default: return 'role-user';
+            }
+        }
+
+        // Render user posts
+        function renderUserPosts(uid) {
+            const userPostsData = postsData.filter(post => post.uid === uid);
+            userPosts.innerHTML = '';
+            
+            if (userPostsData.length === 0) {
+                userPosts.innerHTML = '<p>No activity yet.</p>';
+                return;
+            }
+            
+            userPostsData.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <img src="${post.pfp || defaultPfp}" class="profile-pic-small">
+                        <span class="post-user">${post.user}</span>
+                        <span class="post-time">${post.time}</span>
+                    </div>
+                    <div class="post-content">
+                        ${post.content}
+                    </div>
+                `;
+                userPosts.appendChild(postElement);
+            });
+        }
+
+        // Render home page
+        function renderHomePage() {
+            communityMembers.innerHTML = '';
+            
+            // Sort users by UID
+            const sortedUsers = [...usersData].sort((a, b) => {
+                return parseInt(a.uid.split('-')[1]) - parseInt(b.uid.split('-')[1]);
+            });
+            
+            sortedUsers.forEach(user => {
+                const memberElement = document.createElement('div');
+                memberElement.className = 'message';
+                memberElement.innerHTML = `
+                    <div class="message-header">
+                        <img src="${user.pfp || defaultPfp}" class="profile-pic-small">
+                        <span class="message-user">${user.username}</span>
+                        <span class="role-badge ${getRoleClass(user.role || 'User')}">${user.role || 'User'}</span>
+                        <span class="message-time">UID: ${user.uid}</span>
+                    </div>
+                `;
+                communityMembers.appendChild(memberElement);
+            });
+        }
+
+        // Render admin controls
+        function renderAdminControls() {
+            const user = JSON.parse(localStorage.getItem('bolt_user'));
+            if (user && (user.role === 'Owner' || user.role === 'Admin')) {
+                adminControls.classList.remove('hidden');
+                
+                // Populate user select
+                adminUserSelect.innerHTML = '<option value="">Select User</option>';
+                usersData.forEach(u => {
+                    if (u.uid !== user.uid) { // Can't change your own role
+                        const option = document.createElement('option');
+                        option.value = u.uid;
+                        option.textContent = `${u.username} (${u.uid}) - Current: ${u.role || 'User'}`;
+                        adminUserSelect.appendChild(option);
+                    }
+                });
+            } else {
+                adminControls.classList.add('hidden');
+            }
+        }
+
+        // Set user role
+        adminSetRoleBtn.addEventListener('click', () => {
+            const user = JSON.parse(localStorage.getItem('bolt_user'));
+            if (!user || !(user.role === 'Owner' || user.role === 'Admin')) return;
+            
+            const targetUid = adminUserSelect.value;
+            const newRole = adminRoleSelect.value;
+            
+            if (!targetUid) {
+                showNotification('Please select a user');
+                return;
+            }
+            
+            // Find user in usersData
+            const targetUserIndex = usersData.findIndex(u => u.uid === targetUid);
+            if (targetUserIndex === -1) return;
+            
+            // Only Owner can set Admin and Owner roles
+            if (user.role !== 'Owner' && (newRole === 'Admin' || newRole === 'Owner')) {
+                showNotification('Only the Owner can set Admin and Owner roles');
+                return;
+            }
+            
+            // Update role
+            usersData[targetUserIndex].role = newRole;
+            localStorage.setItem('bolt_users', JSON.stringify(usersData));
+            
+            // Update UI
+            renderHomePage();
+            renderAdminControls();
+            
+            showNotification(`Role updated to ${newRole} for ${usersData[targetUserIndex].username}`);
+        });
+
+        // Toggle between login and register forms
+        showRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.classList.add('hidden');
+            registerForm.classList.remove('hidden');
+        });
+        
+        showLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        });
+
+        // Sequential UIDs from 0002 to 0010
+        function generateUID() {
+            // Get current users count from localStorage
+            let currentCount = localStorage.getItem('bolt_userCount') || 1;
+            currentCount = parseInt(currentCount);
+            
+            // Only allow 10 users (including Bolt!)
+            if (currentCount >= 10) {
+                alert('Maximum number of users (10) reached. This community is now full.');
+                return null;
+            }
+            
+            // Increment count and save
+            currentCount++;
+            localStorage.setItem('bolt_userCount', currentCount);
+            
+            // Format as 4-digit number
+            const uidNumber = currentCount.toString().padStart(4, '0');
+            return 'BLT-' + uidNumber;
+        }
+
+        // Sample invite codes
+        const validInviteCodes = ['BOLT2023', 'REDTHUNDER', 'INVITEONLY'];
+
+        // Register function
+        registerBtn.addEventListener('click', () => {
+            const username = document.getElementById('reg-username').value;
+            const password = document.getElementById('reg-password').value;
+            const inviteCode = document.getElementById('invite-code').value;
+            
+            if (!username || !password || !inviteCode) {
+                showNotification('Please fill in all fields');
+                return;
+            }
+            
+            if (!validInviteCodes.includes(inviteCode.toUpperCase())) {
+                showNotification('Invalid invite code');
+                return;
+            }
+            
+            // Generate UID
+            const uid = generateUID();
+            
+            if (!uid) {
+                return; // Stop if UID couldn't be generated (max users reached)
+            }
+            
+            // Create user object
+            const user = {
+                username: username,
+                password: password, // In real app, this would be hashed
+                uid: uid,
+                bio: '',
+                pfp: defaultPfp,
+                theme: 'default',
+                role: 'User',
+                joinDate: new Date().toLocaleDateString()
+            };
+            
+            // Save user data to localStorage
+            localStorage.setItem('bolt_user', JSON.stringify(user));
+            localStorage.setItem('bolt_loggedIn', 'true');
+            
+            // Add to users list
+            usersData.push({username: username, uid: uid, pfp: defaultPfp, online: true, role: 'User'});
+            localStorage.setItem('bolt_users', JSON.stringify(usersData));
+            
+            // Show forum page
+            authPage.classList.add('hidden');
+            forumPage.classList.remove('hidden');
+            
+            // Display user info
+            currentUsername.textContent = username;
+            
+            // Update online users list
+            updateOnlineUsers();
+            
+            // Add welcome message
+            addChatMessage({
+                user: 'Bolt!',
+                uid: 'BLT-0001',
+                pfp: defaultPfp,
+                content: `Welcome ${username}! You are user #${uid.split('-')[1]} of 10.`
+            });
+            
+            // Apply theme
+            applyTheme(user.theme);
+            
+            // Render home page
+            renderHomePage();
+            
+            // Render admin controls if needed
+            renderAdminControls();
+        });
+
+        // Login function
+        loginBtn.addEventListener('click', () => {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const remember = rememberMe.checked;
+            
+            // Get stored user
+            const storedUser = JSON.parse(localStorage.getItem('bolt_user'));
+            
+            if (username && password && storedUser && username === storedUser.username && password === storedUser.password) {
+                // Update remember me
+                if (remember) {
+                    localStorage.setItem('bolt_remember', 'true');
+                } else {
+                    localStorage.removeItem('bolt_remember');
+                }
+                
+                // Update user online status
+                const userIndex = usersData.findIndex(u => u.uid === storedUser.uid);
+                if (userIndex !== -1) {
+                    usersData[userIndex].online = true;
+                    localStorage.setItem('bolt_users', JSON.stringify(usersData));
+                } else {
+                    usersData.push({
+                        username: storedUser.username,
+                        uid: storedUser.uid,
+                        pfp: storedUser.pfp,
+                        online: true,
+                        role: storedUser.role || 'User'
+                    });
+                    localStorage.setItem('bolt_users', JSON.stringify(usersData));
+                }
+                
+                // Show forum page
+                authPage.classList.add('hidden');
+                forumPage.classList.remove('hidden');
+                
+                // Display user info
+                currentUsername.textContent = storedUser.username;
+                
+                // Update online users
+                updateOnlineUsers();
+                
+                // Add welcome back message if not Bolt!
+                if (storedUser.uid !== 'BLT-0001') {
+                    addChatMessage({
+                        user: 'Bolt!',
+                        uid: 'BLT-0001',
+                        pfp: defaultPfp,
+                        content: `Welcome back ${storedUser.username}!`
+                    });
+                }
+                
+                // Apply theme
+                applyTheme(storedUser.theme);
+                
+                // Render home page
+                renderHomePage();
+                
+                // Render admin controls if needed
+                renderAdminControls();
+            } else {
+                showNotification('Invalid username or password');
+            }
+        });
+
+        // Logout function
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const user = JSON.parse(localStorage.getItem('bolt_user'));
+            
+            // Update user online status
+            if (user) {
+                const userIndex = usersData.findIndex(u => u.uid === user.uid);
+                if (userIndex !== -1) {
+                    usersData[userIndex].online = false;
+                    localStorage.setItem('bolt_users', JSON.stringify(usersData));
+                }
+            }
+            
+            localStorage.removeItem('bolt_loggedIn');
+            if (localStorage.getItem('bolt_remember') !== 'true') {
+                localStorage.removeItem('bolt_user');
+            }
+            authPage.classList.remove('hidden');
+            forumPage.classList.add('hidden');
+            
+            // Clear form fields
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+            document.getElementById('reg-username').value = '';
+            document.getElementById('reg-password').value = '';
+            document.getElementById('invite-code').value = '';
+        });
+
+        // Check if user is already logged in
+        function checkLoggedIn() {
+            if (localStorage.getItem('bolt_loggedIn') === 'true') {
+                const user = JSON.parse(localStorage.getItem('bolt_user'));
+                if (user) {
+                    // Update user online status
+                    const userIndex = usersData.findIndex(u => u.uid === user.uid);
+                    if (userIndex !== -1) {
+                        usersData[userIndex].online = true;
+                        localStorage.setItem('bolt_users', JSON.stringify(usersData));
+                    } else {
+                        usersData.push({
+                            username: user.username,
+                            uid: user.uid,
+                            pfp: user.pfp,
+                            online: true,
+                            role: user.role || 'User'
+                        });
+                        localStorage.setItem('bolt_users', JSON.stringify(usersData));
+                    }
+                    
+                    authPage.classList.add('hidden');
+                    forumPage.classList.remove('hidden');
+                    currentUsername.textContent = user.username;
+                    updateOnlineUsers();
+                    renderChatMessages();
+                    renderHomePage();
+                    applyTheme(user.theme);
+                    
+                    // Check remember me
+                    if (localStorage.getItem('bolt_remember') === 'true') {
+                        rememberMe.checked = true;
+                    }
+                    
+                    // Render admin controls if needed
+                    renderAdminControls();
+                    
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Initialize
+        if (!checkLoggedIn()) {
+            // Check if remembered user exists
+            if (localStorage.getItem('bolt_remember') === 'true' && localStorage.getItem('bolt_user')) {
+                const user = JSON.parse(localStorage.getItem('bolt_user'));
+                document.getElementById('login-username').value = user.username;
+                rememberMe.checked = true;
+            }
+        }
+
+        // Update online users list
+        function updateOnlineUsers() {
+            userList.innerHTML = '';
+            const onlineUsers = usersData.filter(user => user.online);
+            
+            onlineUsers.forEach(user => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="status-indicator"></span>
+                    <img src="${user.pfp || defaultPfp}" class="profile-pic-small">
+                    ${user.username} 
+                    <span class="role-badge ${getRoleClass(user.role || 'User')}">${user.role || 'User'}</span>
+                    (UID: ${user.uid})
+                `;
+                userList.appendChild(li);
+            });
+        }
+
+        // Add message to chat
+        function addChatMessage(message) {
+            if (!message.time) {
+                message.time = new Date().toLocaleTimeString();
+            }
+            if (!message.pfp) {
+                message.pfp = defaultPfp;
+            }
+            
+            chatData.push(message);
+            localStorage.setItem('bolt_chat', JSON.stringify(chatData));
+            
+            renderChatMessages();
+            
+            // Notify other tabs
+            if (typeof BroadcastChannel !== 'undefined') {
+                const channel = new BroadcastChannel('bolt_chat');
+                channel.postMessage({type: 'new_message', message: message});
+            }
+        }
+
+        // Render all chat messages
+        function renderChatMessages() {
+            chatMessages.innerHTML = '';
+            
+            chatData.forEach(message => {
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message';
+                messageElement.innerHTML = `
+                    <div class="message-header">
+                        <img src="${message.pfp || defaultPfp}" class="profile-pic-small">
+                        <span class="message-user">${message.user}</span>
+                        ${message.role ? `<span class="role-badge ${getRoleClass(message.role)}">${message.role}</span>` : ''}
+                        <span class="message-time">${message.time}</span>
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                chatMessages.appendChild(messageElement);
+            });
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Chat functionality
+        sendBtn.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
+            
+            const user = JSON.parse(localStorage.getItem('bolt_user'));
+            if (!user) return;
+            
+            addChatMessage({
+                user: user.username,
+                uid: user.uid,
+                pfp: user.pfp,
+                role: user.role,
+                content: message
+            });
+            
+            messageInput.value = '';
+        }
+
+        // Profile editor
+        editProfileBtn.addEventListener('click', openProfileEditor);
+        
+        function openProfileEditor() {
+            const user = JSON.parse(localStorage.getItem('bolt_user'));
+            if (user) {
+                editUsername.value = user.username;
+                editBio.value = user.bio;
+                profilePicPreview.src = user.pfp || defaultPfp;
+                
+                // Select current theme
+                document.querySelectorAll('.theme-option').forEach(option => {
+                    option.classList.remove('selected');
+                    if (option.dataset.theme === user.theme) {
+                        option.classList.add('selected');
+                    }
+                });
+                
+                profileEditor.classList.remove('hidden');
+            }
+        }
+
+        closeEditor.addEventListener('click', () => {
+            profileEditor.classList.add('hidden');
+        });
+
+        // Profile picture upload
+        profilePicUpload.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    profilePicPreview.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Theme selection
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                themeOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+            });
+        });
+
+        // Apply theme
+        function applyTheme(theme) {
+            themeStyle.className = '';
+            if (theme && theme !== 'default') {
+                themeStyle.classList.add(`theme-${theme}`);
+            }
+        }
+
+        // Save profile
+        saveProfileBtn.addEventListener('click', () => {
+            const user = JSON.parse(localStorage.getItem('bolt_user'));
+            if (user) {
+                const oldUsername = user.username;
+                
+                // Update user data
+                user.username = editUsername.value || user.username;
+                user.bio = editBio.value || user.bio;
+                user.pfp = profilePicPreview.src || user.pfp;
+                
+                // Get selected theme
+                const selectedTheme = document.querySelector('.theme-option.selected').dataset.theme;
+                user.theme = selectedTheme;
+                
+                // Save back to localStorage
+                localStorage.setItem('bolt_user', JSON.stringify(user));
+                
+                // Update in usersData
+                const userIndex = usersData.findIndex(u => u.uid === user.uid);
+                if (userIndex !== -1) {
+                    usersData[userIndex].username = user.username;
+                    usersData[userIndex].pfp = user.pfp;
+                    localStorage.setItem('bolt_users', JSON.stringify(usersData));
+                }
+                
+                // Update display
+                currentUsername.textContent = user.username;
+                updateOnlineUsers();
+                applyTheme(selectedTheme);
+                renderProfilePage();
+                renderHomePage();
+                
+                // Close editor
+                profileEditor.classList.add('hidden');
+                
+                // Add notification
+                if (oldUsername !== user.username) {
+                    addChatMessage({
+                        user: 'Bolt!',
+                        uid: 'BLT-0001',
+                        pfp: defaultPfp,
+                        role: 'Owner',
+                        content: `${oldUsername} changed their username to ${user.username}`
+                    });
+                } else {
+                    addChatMessage({
+                        user: 'Bolt!',
+                        uid: 'BLT-0001',
+                        pfp: defaultPfp,
+                        role: 'Owner',
+                        content: `${user.username} updated their profile`
+                    });
+                }
+                
+                showNotification('Profile updated successfully');
+            }
+        });
+
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Listen for messages from other tabs
+        if (typeof BroadcastChannel !== 'undefined') {
+            const channel = new BroadcastChannel('bolt_chat');
+            
+            channel.addEventListener('message', (event) => {
+                if (event.data.type === 'new_message') {
+                    // Add message to chat if it's not already there
+                    const exists = chatData.some(msg => 
+                        msg.user === event.data.message.user && 
+                        msg.content === event.data.message.content &&
+                        msg.time === event.data.message.time
+                    );
+                    
+                    if (!exists) {
+                        chatData.push(event.data.message);
+                        localStorage.setItem('bolt_chat', JSON.stringify(chatData));
+                        renderChatMessages();
+                    }
+                }
+            });
+        }
+
+        // Initial renders
+        renderChatMessages();
+        renderHomePage();
+    </script>
+</body>
+</html>
